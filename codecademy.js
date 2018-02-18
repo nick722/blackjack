@@ -5,6 +5,15 @@ https://www.codecademy.com/courses/blackjack-part-1/1/6
 // Our deal function will return a random card
 var deal = function() {
     card = Math.floor(Math.random()*52+1);
+    // if (1 <= card && card <= 13) {
+    //     card = `${card} of Hearts`;
+    // } else if (14 <= card && card <= 26 ) {
+    //     card = `${card / 2 } of Diamonds`;
+    // } else if (27 <= card && card <= 39 ) {
+    //     card = `${card / 3 } of Spades`;
+    // } else if (40 <= card && card <= 53 ) {
+    //     card = `${card / 4 } of Clubs`;
+    // }
     return card;
 };
 

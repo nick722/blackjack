@@ -16,7 +16,7 @@ function getSum(hand) {
     for (var i=0; i<hand.length; i++ ) {
         var card = hand[i];
         if (card !== 'A') {
-            if (card === 'j' || card === 'Q' || card === 'K') {
+            if (card === 'J' || card === 'Q' || card === 'K') {
                 sum = sum + 10;
             } else {
                 sum = sum + parseInt(card);
@@ -45,43 +45,42 @@ function getStatus() {
 var dealer = [getCard()];
 var player = [getCard(), getCard()];
 
-var answer = '';
-do {
-    process.stdout.write('One more card? y/n \n');
-    process.stdin.on('data', function (data) {
-        // process.stdout.write('You entered: '+ data.toString().trim() + '\n');
-        answer = data.toString().trim();
-        console.log('Your answer is ', answer);
+if (getSum(player) === 21) {
+    process.stdout.write(getStatus());
+    process.stdout.write('\nWow! Black Jack right away!\n');
+} else {
+    var answer = '';
+    cards = 2;
+    do {
+        process.stdout.write(getStatus());
+        process.stdout.write('\nOne more card? y/n \n');
+        process.stdin.on('data', function (data) {
+             answer = data.toString().trim();
 
-        if (answer === 'y') {
-            player.push(getCard());
-        }
+            if (answer === 'y') {
+                player.push(getCard());
+            }
 
-        // chedck for too much or win
-        sum = getSum(player);
-        if (sum > 21) {
-            process.stdout.write('Too much \n' + getStatus());
-        } else if (sum === 21) {
-            process.stdout.write('\n Black Jack! \n' + getStatus());
-        }
+            // check for too much or win
+            sum = getSum(player);
+            process.stdout.write(getStatus() + '\n');
+            if (cards === 5) {
+                process.stdout.write('You\'ve taken 5 cards without surpassing 21. You win!\n' );
+                process.exit();
+            }
+            if (sum > 21) {
+                process.stdout.write('That\'s too much, man!\n');
+                 process.exit();
+            } else if (sum === 21) {
+                process.stdout.write('Black Jack!\n' );
+                process.exit();
+            }
+        });
+        cards++;
+    } while (answer === 'y');
+}
 
-        console.log(getStatus());
-    });
 
-    // if (answer === 'y') {
-    //     player.push(getCard());
-    // }
-    //
-    // // chedck for too much or win
-    // sum = getSum(player);
-    // if (sum > 21) {
-    //     process.stdout.write('\n Too much \n' + getStatus());
-    //     break;
-    // } else if (sum === 21) {
-    //     process.stdout.write('\n Black Jack! \n' + getStatus());
-    //     break;
-    // }
-    //
-    // console.log(getStatus());
-} while (answer === 'y');
+
+
 
