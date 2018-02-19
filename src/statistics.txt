@@ -1,0 +1,4 @@
+
+Victory statistics:
+Dealer: 1
+Player: 0
